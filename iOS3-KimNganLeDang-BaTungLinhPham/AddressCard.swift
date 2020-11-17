@@ -8,27 +8,27 @@
 import Foundation
 
 func == (left: AddressCard, right: AddressCard) -> Bool {
-return left.vorname == right.vorname
+return left.firstName == right.firstName
 }
 
 
 class AddressCard : Codable, Equatable {
-    var vorname : String
-    var nachname : String
-    var straße : String
-    var hausnummer : Int
-    var postleitzahl : Int
-    var ort : Int
-    var hobbys = [String]()
-    var freunde = [AddressCard]()
+    var firstName : String
+    var lastName : String
+    var street : String
+    var houseNumber : Int
+    var postCode : Int
+    var city : Int
+    var hobbies = [String]()
+    var friends = [AddressCard]()
     
     func add(hobby: String) {
-        hobbys.append(hobby)
+        hobbies.append(hobby)
     }
     
     func remove(hobby: String) {
-        if let i = hobbys.firstIndex(of: hobby) {
-            hobbys.remove(at: i)
+        if let i = hobbies.firstIndex(of: hobby) {
+            hobbies.remove(at: i)
         }
         else {
             print("Hobby: \(hobby) ist nicht existiert")
@@ -36,15 +36,15 @@ class AddressCard : Codable, Equatable {
     }
     
     func add(friend: AddressCard) {
-        freunde.append(friend)
+        friends.append(friend)
     }
     
     func remove(friend: AddressCard) {
-        if let i = freunde.firstIndex(of: friend) {
-            freunde.remove(at: i)
+        if let i = friends.firstIndex(of: friend) {
+            friends.remove(at: i)
         }
         else {
-            print("Freund: \(friend.vorname) ist nicht existiert")
+            print("Freund: \(friend.firstName) ist nicht existiert")
         }
     }
 }
