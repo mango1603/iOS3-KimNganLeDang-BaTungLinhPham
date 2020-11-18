@@ -31,7 +31,7 @@ class AddressCard : Codable, Equatable {
             hobbies.remove(at: i)
         }
         else {
-            print("Hobby: \(hobby) ist nicht existiert")
+            print("Hobby: \(hobby) doesn't exist")
         }
     }
     
@@ -44,7 +44,7 @@ class AddressCard : Codable, Equatable {
             friends.remove(at: i)
         }
         else {
-            print("Freund: \(friend.firstName) ist nicht existiert")
+            print("Friend: \(friend.firstName) doesn't exist")
         }
     }
     
@@ -52,11 +52,11 @@ class AddressCard : Codable, Equatable {
         print("| \(firstName) \(lastName)")
         print("| \(street) \(houseNumber)")
         print("| \(postCode) \(city)")
-        print("| Hobbys:")
+        print("| Hobbies:")
         for String in hobbies {
             print("|      \(String)")
         }
-        print("| Freunde:")
+        print("| Friends:")
         for AddressCard in friends {
             print("|      \(AddressCard.firstName) \(AddressCard.lastName), \(AddressCard.postCode) \(AddressCard.city)")
         }
