@@ -7,5 +7,7 @@
 
 import Foundation
 
-print("Hello, World!")
-
+func readOrder() -> String{
+    let order = readLine()!
+    return order
+}

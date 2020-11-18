@@ -47,4 +47,18 @@ class AddressCard : Codable, Equatable {
             print("Freund: \(friend.firstName) ist nicht existiert")
         }
     }
+    
+    func printInfo() {
+        print("| \(firstName) \(lastName)")
+        print("| \(street) \(houseNumber)")
+        print("| \(postCode) \(city)")
+        print("| Hobbys:")
+        for String in hobbies {
+            print("|      \(String)")
+        }
+        print("| Freunde:")
+        for AddressCard in friends {
+            print("|      \(AddressCard.firstName) \(AddressCard.lastName), \(AddressCard.postCode) \(AddressCard.city)")
+        }
+    }
 }
