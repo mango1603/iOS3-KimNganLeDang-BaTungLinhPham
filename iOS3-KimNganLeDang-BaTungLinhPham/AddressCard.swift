@@ -16,9 +16,9 @@ class AddressCard : Codable, Equatable {
     var firstName : String
     var lastName : String
     var street : String
-    var houseNumber : Int
-    var postCode : Int
-    var city : Int
+    var houseNumber : String
+    var postCode : String
+    var city : String
     var hobbies = [String]()
     var friends = [AddressCard]()
     
@@ -46,6 +46,30 @@ class AddressCard : Codable, Equatable {
         else {
             print("Friend: \(friend.firstName) doesn't exist")
         }
+    }
+    
+    func addFirstName(firstName : String) {
+        self.firstName = firstName
+    }
+    
+    func addLastName(lastName : String) {
+        self.lastName = lastName
+    }
+    
+    func addStreet(street : String) {
+        self.street = street
+    }
+    
+    func addHouseNumber(houseNumber : String) {
+        self.houseNumber = houseNumber
+    }
+    
+    func addPostcode(postcode : String) {
+        self.postCode = postcode
+    }
+    
+    func addCity(city : String) {
+        self.city = city
     }
     
     func printInfo() {

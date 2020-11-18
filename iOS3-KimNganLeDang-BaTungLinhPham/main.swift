@@ -7,22 +7,45 @@
 
 import Foundation
 
-//func readOrder() -> String{
-//    let order = readLine()!
-//    return order
-//}
-//
+func setOrder() {
+    let order = read(withPrompt: "(E)ingabe, (S)uche, (L)iste oder (Q)uit?").lowercased()
+    
+    switch order{
+    case "e":
+        setNewAddressCard()
+    case "s":
+        searchAddressCard()
+    case "l":
+        listAddressCard()
+    case "q":
+        quit()
+    default:
+        print("Bitte geben Sie ein gültiger Befehl!!!")
+    }
+}
 
-func read(withPrompt: String) -> Any? {
+func setNewAddressCard(){
+    
+}
+
+func searchAddressCard(){
+    
+}
+
+func listAddressCard(){
+    
+}
+
+func quit(){
+    
+}
+
+func read(withPrompt: String) -> String {
     print(withPrompt,terminator: "")
     
-    if let input = readLine() {
-        if let num = Int(input) {//if input is integer
-            return num
-        }
-        return input
-    }
-    return nil
+    let input = readLine(strippingNewline: false)!
+    
+    return input
 }
 
 ///* Test print */
