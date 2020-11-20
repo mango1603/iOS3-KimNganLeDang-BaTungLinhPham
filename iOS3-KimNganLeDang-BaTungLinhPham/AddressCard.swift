@@ -14,18 +14,16 @@ return left.firstName == right.firstName
 class AddressCard : Codable, Equatable {
     var firstName : String
     var lastName : String
-    var street : String
-    var houseNumber : String
-    var postCode : String
+    var street : String //inclusive house number
+    var postCode : Int
     var city : String
     var hobbies = [String]()
     var friends = [AddressCard]()
     
-    init(firstName:String, lastName:String, street:String, houseNumber: String, postCode:String, city:String, hobbies:[String], friends : [AddressCard] ){
+    init(firstName:String, lastName:String, street:String, postCode:Int, city:String, hobbies:[String], friends : [AddressCard] ){
         self.firstName = firstName
         self.lastName = lastName
         self.street = street
-        self.houseNumber = houseNumber
         self.postCode = postCode
         self.city = city
         self.hobbies = hobbies
@@ -70,11 +68,7 @@ class AddressCard : Codable, Equatable {
         self.street = street
     }
     
-    func addHouseNumber(houseNumber : String) {
-        self.houseNumber = houseNumber
-    }
-    
-    func addPostcode(postcode : String) {
+    func addPostcode(postcode : Int) {
         self.postCode = postcode
     }
     
@@ -85,7 +79,7 @@ class AddressCard : Codable, Equatable {
     func printInfo() {
         print("+--------------------------------------")
         print("| \(firstName) \(lastName)")
-        print("| \(street) \(houseNumber)")
+        print("| \(street) ")
         print("| \(postCode) \(city)")
         print("| Hobbies:")
         for String in hobbies {

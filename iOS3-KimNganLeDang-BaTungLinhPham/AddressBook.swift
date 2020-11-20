@@ -22,15 +22,12 @@ class AddressBook : Codable {
         else {
             print("Friend: \(card.firstName) doesn't exist")
         }
-        //TODO: delete friends reference in friends list
-/* 
-                for friend in addressCards {
-                    if let i = friend.friends.firstIndex(of: card){
-                        friend.friends.remove(at: i)
-                    }
-                }
- */
-
+        // delete friends reference in friends list
+        for friend in addressCards {
+            if let i = friend.friends.firstIndex(of: card){
+                friend.friends.remove(at: i)
+            }
+        }
     }
     
     func sortByName () {
@@ -41,14 +38,13 @@ class AddressBook : Codable {
         //addressCards.sort(by: { $0.lastName < $1.lastName } )
     }
     
-    func searchByName (searchName : String) -> [AddressCard] {
-        var matchAddressCards = [AddressCard]()
-        for AddressCard in addressCards {
-            if AddressCard.lastName.lowercased() == searchName.lowercased() {
-                matchAddressCards.append(AddressCard)
+    func searchByName (searchName : String) -> AddressCard? {
+        for card in addressCards {
+            if card.lastName.lowercased() == searchName.lowercased() {
+                return card
             }
         }
-        return matchAddressCards
+        return nil
     }
     
     func save (toFile path : String) { // 05-Foundation-Archivierung Folie 12
