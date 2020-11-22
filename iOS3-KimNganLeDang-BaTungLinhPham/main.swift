@@ -26,7 +26,7 @@ func main() {
         case "l":
             listAddressCard()
         case "q":
-            quit()
+            myAddressBook.save(toFile: path)
             running = false
         default:
             print("Please enter a valid command! ")
@@ -55,7 +55,7 @@ func addNewAddressCard(){
     while postCode == -1 {
         postCode = Int(read(withPrompt: "Invalid Post Code, please enter it again: ")) ?? -1
     }
-        
+    
     let city = read(withPrompt: "City: ")
     
     var hobbies: [String] = []
@@ -106,13 +106,14 @@ func searchAddressCard(){
         var running = true
         while running {
             let command = getSearchCommand().lowercased()
-        
+            
             switch command {
             case "f":
                 addFriend(user: card)
             case "d" :
                 myAddressBook.remove(card: card)
                 print("Contact is deleted!")
+                running = false
             case "r" :
                 running = false
             default:
@@ -127,18 +128,14 @@ func searchAddressCard(){
 /* List all address cards in the address book */
 func listAddressCard(){
     if myAddressBook.addressCards.isEmpty{
+        print("Current Address Book is empty")
+    } else {
         print("+--------------------------------------")
+        myAddressBook.sortByName()
+        for contact in myAddressBook.addressCards{
+            contact.printInfo()
+        }
     }
-    myAddressBook.sortByName()
-    for contact in myAddressBook.addressCards{
-        contact.printInfo()
-    }
-}
-
-/* Quit Program */
-func quit(){
-    myAddressBook.save(toFile: path)
-    exit(0)
 }
 
 /* Read the console input */

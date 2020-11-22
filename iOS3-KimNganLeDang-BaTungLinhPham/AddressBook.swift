@@ -33,7 +33,7 @@ class AddressBook : Codable {
     func sortByName () {
         addressCards.sort(by: { (s1: AddressCard, s2: AddressCard) -> Bool in
             return s1.lastName < s2.lastName
-            })
+        })
     }
     
     func searchByName (searchName : String) -> AddressCard? {
@@ -51,17 +51,17 @@ class AddressBook : Codable {
         // encode and save
         let encoder = PropertyListEncoder()
         if let data = try? encoder.encode(self) {
-        try? data.write(to: url) }
+            try? data.write(to: url) }
     }
     
     class func addressBook(fromFile path: String) -> AddressBook? { //05-Foundation-Archivierung Folie 13
         let url = URL(fileURLWithPath: path)
-            if let data = try? Data(contentsOf: url) {
-                let decoder = PropertyListDecoder()
-                if let addressBook = try? decoder.decode(AddressBook.self, from: data) {
-                    return addressBook
-                   }
-               }
-            return nil
+        if let data = try? Data(contentsOf: url) {
+            let decoder = PropertyListDecoder()
+            if let addressBook = try? decoder.decode(AddressBook.self, from: data) {
+                return addressBook
+            }
+        }
+        return nil
     }
 }

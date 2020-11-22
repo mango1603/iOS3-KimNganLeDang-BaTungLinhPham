@@ -8,7 +8,7 @@
 import Foundation
 
 func == (left: AddressCard, right: AddressCard) -> Bool {
-return left.firstName == right.firstName
+    return left.firstName == right.firstName
 }
 
 class AddressCard : Codable, Equatable {
