@@ -34,8 +34,6 @@ class AddressBook : Codable {
         addressCards.sort(by: { (s1: AddressCard, s2: AddressCard) -> Bool in
             return s1.lastName < s2.lastName
             })
-        // shorter code:  02-Swift-T2 Folie 44. Does it work??
-        //addressCards.sort(by: { $0.lastName < $1.lastName } )
     }
     
     func searchByName (searchName : String) -> AddressCard? {

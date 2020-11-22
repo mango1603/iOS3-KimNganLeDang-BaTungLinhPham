@@ -14,8 +14,11 @@ if let book = AddressBook.addressBook(fromFile: path) {
 }
 
 func main() {
-    while let order = read(withPrompt: "(A)dd, (S)earch, (L)ist or (Q)uit?") as? String {
-        switch order.lowercased() {
+    var running = true
+    while running {
+        let command = getMainCommand().lowercased()
+        
+        switch command {
         case "a":
             addNewAddressCard()
         case "s":
@@ -24,28 +27,47 @@ func main() {
             listAddressCard()
         case "q":
             quit()
+            running = false
         default:
             print("Please enter a valid command! ")
         }
     }
 }
 
+func getMainCommand() -> String {
+    return read(withPrompt: "(A)dd, (S)earch, (L)ist or (Q)uit? ")
+}
+
+func isStringAnInt(string: String) -> Bool {
+    return Int(string) != nil
+}
+
 func addNewAddressCard(){
     print("Adding a new contact: ")
-    let firstName = read(withPrompt: "First Name: ") as! String
-    let lastName = read(withPrompt: "Last Name: ") as! String
-    let street = read(withPrompt: "Street: ") as! String
-    let postCode = read(withPrompt: "Post Code: ") as! Int
-    let city = read(withPrompt: "City: ")as! String
+    
+    let firstName = read(withPrompt: "First Name: ")
+    
+    let lastName = read(withPrompt: "Last Name: ")
+    
+    let street = read(withPrompt: "Street: ")
+    
+    var postCode = Int(read(withPrompt: "Post Code: ")) ?? -1
+    while postCode == -1 {
+        postCode = Int(read(withPrompt: "Invalid Post Code, please enter it again: ")) ?? -1
+    }
+        
+    let city = read(withPrompt: "City: ")
+    
     var hobbies: [String] = []
-    var hobby = ""
     var insertHobby = true
     while insertHobby {
-        hobby = read(withPrompt: "Hobby: (Cancel with (Q)) ") as! String
-        if !hobbies.contains(hobby) && hobby.lowercased() != "q"{
+        let hobby = read(withPrompt: "Hobby: (Cancel with (Q)) ")
+        if hobby.lowercased() == "q"{
+            insertHobby = false
+        }
+        else {
             hobbies.append(hobby)
         }
-        else {insertHobby = false}
     }
     
     // create the new contact card
@@ -54,47 +76,50 @@ func addNewAddressCard(){
     myAddressBook.add(card: newContact)
 }
 
-func searchAddressCard(){
-    let name = read(withPrompt: "Search Last Name: ") as! String
+func getSearchCommand() -> String {
+    return read(withPrompt: "(F)riend adding, (D)elete, (R)eturn ")
+}
+
+func addFriend(user : AddressCard) {
+    let friendName = read(withPrompt: "Friend's Last Name: ")
     
-    if let card = myAddressBook.searchByName(searchName: name){
+    if let friend = myAddressBook.searchByName(searchName: friendName) {
+        if friend.lastName == friendName {
+            if user.friends.contains(friend) { // check duplicate
+                print("'\(user.firstName) \(user.lastName)' is already friend with'\(friend.firstName) \(friend.lastName)'.")
+            }
+            else {
+                user.add(friend: friend)
+                friend.add(friend: user) // add friend on both side
+                print("'\(friend.firstName) \(friend.lastName)' is added.")
+            }
+        }
+    } else {
+        print("Friend not found!")
+    }
+}
+
+
+func searchAddressCard(){
+    if let card = myAddressBook.searchByName(searchName: read(withPrompt: "Search Last Name: ")) {
         card.printInfo()
-        while let order = read(withPrompt: "(F)riend adding, (D)elete, (R)eturn ") as? String{
-            switch order.lowercased(){
+        var running = true
+        while running {
+            let command = getSearchCommand().lowercased()
+        
+            switch command {
             case "f":
-                if let friendName = read(withPrompt: "Friend's Last Name: ") as? String {
-                    if myAddressBook.searchByName(searchName: friendName) != nil{
-                        let friend = myAddressBook.searchByName(searchName: friendName)!
-                        if friend.lastName == friendName {
-                            if card.friends.contains(friend) { // check duplicate
-                                print("'\(card.firstName) \(card.lastName)' is already friend with'\(friend.firstName) \(friend.lastName)'.")
-                            }
-                            else {
-                                card.add(friend: friend)
-                                friend.add(friend: card) // add friend on both side 
-                                print("'\(friend.firstName) \(friend.lastName)' is added.")
-                            }
-                        }
-                    }
-                    else {
-                        print("Friend not found!")
-                        break
-                    }
-                }
-                
+                addFriend(user: card)
             case "d" :
                 myAddressBook.remove(card: card)
                 print("Contact is deleted!")
-                
             case "r" :
-                return
-                
+                running = false
             default:
                 print("Please enter a valid command!")
             }
         }
-    }
-    else { // could not find any contact
+    } else {
         print("Contact not found!")
     }
 }
@@ -117,40 +142,9 @@ func quit(){
 }
 
 /* Read the console input */
-func read(withPrompt: String) -> Any? {
+func read(withPrompt: String) -> String {
     print(withPrompt,terminator: "")
-    
-    if let input = readLine() {
-        if let postcode = Int(input) {
-            return postcode
-        }
-        return input
-    }
-    return nil
+    return readLine() ?? "invalid input"
 }
-
-/* Test print */
-//func printTest () {
-//    let name = read(withPrompt: "Input your name: ")
-//    let age = read(withPrompt: "Input your age: ")
-//    print("Name: ", name)
-//    print("Age: ", age)
-//}
-//
-//printTest()
-
-/* Help function to create contact address for testing*/
-func helpFunction(){
-    
-    let person1 = AddressCard(firstName: "Kim Ngan", lastName: "Le Dang", street: "Goethestrasse 38", postCode: 12345, city:"Berlin", hobbies: ["Cook", "Photography"], friends: [])
-    let person2 = AddressCard(firstName: "Tung Linh", lastName: "Pham Ba", street: "Storkowerstrasse 10", postCode: 12345, city:"Berlin", hobbies: ["Code", "Read"], friends: [])
-    let person3 = AddressCard(firstName: "Valentin", lastName: "Boehmer", street: "Emserstrasse 10", postCode: 12345, city:"Berlin", hobbies: ["Swim", "Jogging"], friends: [])
-    
-    myAddressBook.add(card: person1)
-    myAddressBook.add(card: person2)
-    myAddressBook.add(card: person3)
-}
-
-//helpFunction()
 
 main()
