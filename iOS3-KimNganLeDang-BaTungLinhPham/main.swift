@@ -144,4 +144,17 @@ func read(withPrompt: String) -> String {
     return readLine() ?? "invalid input"
 }
 
+/* Help function to create contact address for testing*/
+func helpFunction(){
+    let person1 = AddressCard(firstName: "Kim Ngan", lastName: "Le Dang", street: "Goethestrasse 38", postCode: 12345, city:"Berlin", hobbies: ["Cook", "Photography"], friends: [])
+    let person2 = AddressCard(firstName: "Tung Linh", lastName: "Pham Ba", street: "Storkowerstrasse 10", postCode: 12345, city:"Berlin", hobbies: ["Code", "Read"], friends: [])
+    let person3 = AddressCard(firstName: "Valentin", lastName: "Boehmer", street: "Emserstrasse 10", postCode: 12345, city:"Berlin", hobbies: ["Swim", "Jogging"], friends: [])
+
+    myAddressBook.add(card: person1)
+    myAddressBook.add(card: person2)
+    myAddressBook.add(card: person3)
+}
+
+//helpFunction()
+
 main()
